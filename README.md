@@ -1,4 +1,5 @@
 # Datahack_final
+
 1. Descripción del problema
 DH Marketing Consultants te ha contratado en calidad de analista de datos para investigar y analizar un conjunto de datos del departamento de marketing. El director de marketing requiere generar valor a partir de estos datos y te solicita realizar un análisis. Dicho análisis debe basarse en los diversos factores que podemos medir en el conjunto de datos. Se espera llevar a cabo, como mínimo, las siguientes tareas:
 
