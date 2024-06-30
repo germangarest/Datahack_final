@@ -1,182 +1,259 @@
-# Datahack_final
+Index
 
-1. Descripción del problema
-DH Marketing Consultants te ha contratado en calidad de analista de datos para investigar y analizar un conjunto de datos del departamento de marketing. El director de marketing requiere generar valor a partir de estos datos y te solicita realizar un análisis. Dicho análisis debe basarse en los diversos factores que podemos medir en el conjunto de datos. Se espera llevar a cabo, como mínimo, las siguientes tareas:
+    1. Problem Description
+    2. Dataset
+        2.1 Data Acquisition
+        2.2 Fields and Records
+    3. ETL
+        3.1 Extraction (source connection)
+        3.2 Transformation (PowerQuery)
+        3.3 Loading (PowerBI)
+    4. Data Model (Star Schema)
+    5. Ratios and Metrics of Interest
+    6. Final Result
+    7. References
+    8. Appendix
+        8.1 DAX Formulas Used
+        8.2 PowerQuery
 
-Limpieza de Datos
-Transformación de Datos
-Visualización
+1. Problem Description
+
+DH Marketing Consultants has hired you as a data analyst to investigate and analyze a dataset from the marketing department. The marketing director requires generating value from these data and asks you to perform an analysis. This analysis must be based on the various factors that we can measure in the dataset. At minimum, the following tasks are expected:
+
+    Data Cleaning
+    Data Transformation
+    Visualization
+
 2. Dataset
-Los datos suministrados provienen de una fuente de datos de acceso público que contiene información relacionada con cinco campañas de marketing llevadas a cabo por una empresa. Estos datos incluyen detalles sobre las plataformas utilizadas y el número de ventas generadas a través de estas plataformas, junto con otros datos de gran relevancia que ofrecen un potencial significativo para extraer una gran cantidad de información valiosa.
 
-2.1 Obtención de los datos
-Los datos han sido obtenidos de manera pública y gratuita a través del siguiente enlace. El contexto se basa en la necesidad de crear un modelo de respuesta que potencie de manera significativa la eficiencia de una campaña de marketing al aumentar las respuestas o reducir los gastos. El objetivo radica en prever quiénes responderán a una oferta de producto o servicio, lo cual puede optimizar la estrategia de marketing y maximizar los recursos invertidos en la campaña.
+The data provided comes from a publicly accessible data source that contains information related to five marketing campaigns conducted by a company. These data include details on the platforms used and the number of sales generated through these platforms, along with other highly relevant data that offer significant potential for extracting a large amount of valuable information.
+2.1 Data Acquisition
 
-2.2. Campos y registros
-Los campos que conforman el dataset podrían ser clasificados en 4 grupos principales, siendo 29 en total:
+The data has been obtained publicly and free of charge through the following link. The context is based on the need to create a response model that significantly enhances the efficiency of a marketing campaign by increasing responses or reducing expenses. The goal lies in foreseeing who will respond to an offer for a product or service, which can optimize the marketing strategy and maximize the resources invested in the campaign.
+2.2 Fields and Records
 
-Datos Demográficos y Personales:
+The fields that make up the dataset could be classified into 4 main groups, totaling 29:
 
-ID: Identificación única del cliente. (Tipo de dato: Entero)
+    Demographic and Personal Data:
+    <br></br>
 
-Year_Birth: Año de nacimiento del cliente. (Tipo de dato: Entero)
+    ID: Unique customer identification. (Data type: Integer)
 
-Education: Nivel educativo del cliente. (Tipo de dato: Cadena de texto)
+    Year_Birth: Customer's year of birth. (Data type: Integer)
 
-Marital_Status: Estado civil del cliente. (Tipo de dato: Cadena de texto)
+    Education: Customer's educational level. (Data type: Text)
 
-Income: Ingresos anuales del hogar del cliente. (Tipo de dato: Numérico - decimal)
+    Marital_Status: Customer's marital status. (Data type: Text)
 
-Kidhome: Número de niños pequeños en el hogar del cliente. (Tipo de dato: Entero)
+    Income: Annual household income of the customer. (Data type: Numeric - decimal)
 
-Teenhome: Número de adolescentes en el hogar del cliente. (Tipo de dato: Entero)
+    Kidhome: Number of young children in the customer's home. (Data type: Integer)
 
-Dt_Customer: Fecha de inscripción del cliente con la empresa. (Tipo de dato: Fecha)
+    Teenhome: Number of teenagers in the customer's home. (Data type: Integer)
 
+    Dt_Customer: Customer's registration date with the company. (Data type: Date)
+    <br></br>
 
-Comportamiento de Compra:
+    Purchasing Behavior:
+    <br></br>
 
-Recency: Número de días desde la última compra del cliente. (Tipo de dato: Entero)
+    Recency: Number of days since the customer's last purchase. (Data type: Integer)
 
-NumDealsPurchases: Número de compras realizadas con descuento. (Tipo de dato: Entero)
+    NumDealsPurchases: Number of purchases made with a discount. (Data type: Integer)
 
-NumWebPurchases: Número de compras realizadas a través del sitio web de la empresa. (Tipo de dato: Entero)
+    NumWebPurchases: Number of purchases made through the company's website. (Data type: Integer)
 
-NumCatalogPurchases: Número de compras realizadas usando catálogo. (Tipo de dato: Entero)
+    NumCatalogPurchases: Number of purchases made using a catalog. (Data type: Integer)
 
-NumStorePurchases: Número de compras realizadas directamente en tiendas. (Tipo de dato: Entero)
+    NumStorePurchases: Number of purchases made directly in stores. (Data type: Integer)
 
-NumWebVisitsMonth: Número de visitas al sitio web de la empresa en el último mes. (Tipo de dato: Entero)
+    NumWebVisitsMonth: Number of visits to the company's website in the last month. (Data type: Integer)
+    <br></br>
 
+    Spending on Products:
+    <br></br>
 
-Gastos en Productos:
+    MntWines: Amount spent on wine products in the last 2 years. (Data type: Numeric - decimal)
 
-MntWines: Monto gastado en productos de vino en los últimos 2 años. (Tipo de dato: Numérico - decimal)
+    MntFruits: Amount spent on fruit products in the last 2 years. (Data type: Numeric - decimal)
 
-MntFruits: Monto gastado en productos de frutas en los últimos 2 años. (Tipo de dato: Numérico - decimal)
+    MntMeatProducts: Amount spent on meat products in the last 2 years. (Data type: Numeric - decimal)
 
-MntMeatProducts: Monto gastado en productos de carne en los últimos 2 años. (Tipo de dato: Numérico - decimal)
+    MntFishProducts: Amount spent on fish products in the last 2 years. (Data type: Numeric - decimal)
 
-MntFishProducts: Monto gastado en productos de pescado en los últimos 2 años. (Tipo de dato: Numérico - decimal)
+    MntSweetProducts: Amount spent on sweet products in the last 2 years. (Data type: Numeric - decimal)
 
-MntSweetProducts: Monto gastado en productos dulces en los últimos 2 años. (Tipo de dato: Numérico - decimal)
+    MntGoldProds: Amount spent on gold products in the last 2 years. (Data type: Numeric - decimal)
+    <br></br>
 
-MntGoldProds: Monto gastado en productos de oro en los últimos 2 años. (Tipo de dato: Numérico - decimal)
+    Responses to Marketing Campaigns:
+    <br></br>
 
+    AcceptedCmp3: 1 if the customer accepted the offer in the third campaign, 0 otherwise. (Data type: Integer - binary)
 
-Respuestas a Campañas de Marketing:
+    AcceptedCmp4: 1 if the customer accepted the offer in the fourth campaign, 0 otherwise. (Data type: Integer - binary)
 
-AcceptedCmp3: 1 si el cliente aceptó la oferta en la tercera campaña, 0 en caso contrario. (Tipo de dato: Entero - binario)
+    AcceptedCmp5: 1 if the customer accepted the offer in the fifth campaign, 0 otherwise. (Data type: Integer - binary)
 
-AcceptedCmp4: 1 si el cliente aceptó la oferta en la cuarta campaña, 0 en caso contrario. (Tipo de dato: Entero - binario)
+    AcceptedCmp1: 1 if the customer accepted the offer in the first campaign, 0 otherwise. (Data type: Integer - binary)
 
-AcceptedCmp5: 1 si el cliente aceptó la oferta en la quinta campaña, 0 en caso contrario. (Tipo de dato: Entero - binario)
+    AcceptedCmp2: 1 if the customer accepted the offer in the second campaign, 0 otherwise. (Data type: Integer - binary)
 
-AcceptedCmp1: 1 si el cliente aceptó la oferta en la primera campaña, 0 en caso contrario. (Tipo de dato: Entero - binario)
+    Complain: 1 if the customer filed a complaint in the last 2 years. (Data type: Integer - binary)
 
-AcceptedCmp2: 1 si el cliente aceptó la oferta en la segunda campaña, 0 en caso contrario. (Tipo de dato: Entero - binario)
+    Z_CostContact: Fixed cost associated with contacting the customer. (Data type: Integer)
 
-Complain: 1 si el cliente presentó una queja en los últimos 2 años. (Tipo de dato: Entero - binario)
+    Z_Revenue: Revenue generated from customer contact. (Data type: Integer)
 
-Z_CostContact: Costo fijo asociado al contacto con el cliente. (Tipo de dato: Entero)
-
-Z_Revenue: Ingresos generados por el contacto con el cliente. (Tipo de dato: Entero)
-
-Response: 1 si el cliente aceptó la oferta en la última campaña, 0 en caso contrario. (Tipo de dato: Entero - binario)
+    Response: 1 if the customer accepted the offer in the last campaign, 0 otherwise. (Data type: Integer - binary)
 
 3. ETL
-3.1 Extracción (conexión de orígen)
-Para la extracción de datos se ha hecho una conexión de orígen de datos desde PowerBI hasta el archivo llamado marketing_campaign.xlsx desde Menú Datos > Libro de Excel obteniendose la siguiente visualización:
+3.1 Extraction (source connection)
 
-3.2 Transformación (PowerQuery)
-3.3 Carga (PowerBI)
-4. Modelo de Datos (Esquema en Estrella)
+For data extraction, a source data connection has been made from PowerBI to the file named marketing_campaign.xlsx from Menu Data > Excel Workbook obtaining the following visualization:
 
-Tabla de Hechos:
-La tabla de hechos contiene las métricas cuantitativas que vamos analizar. En este caso, las métricas más relevantes para el conjunto de datos de la campaña de marketing son:
+<br></br>
 
+E1
 
-CustomerID: clave foránea vinculada a la dimensión Cliente
-CampaignI: clave foránea vinculada a la dimensión Campaña
-AcceptedCmp1, AcceptedCmp2, AcceptedCmp3, AcceptedCmp4, AcceptedCmp5, Response: 1 para aceptado, 0 para no aceptado
-Complain: 1 para queja, 0 para no queja
-NumDealsPurchases, NumWebPurchases, NumCatalogPurchases, NumStorePurchases, NumWebVisitsMonth: métricas cuantitativas.
+<br></br>
+The data were then displayed in the PowerQuery Editor for subsequent processing and transformation (see next figure)
+<br></br>
 
-Dimensión Cliente:
+E2
+<br></br>
 
-CustomerID: clave primaria
+The M Language code implemented for data extraction is found in section 8.2 of this document
+3.2 Transformation (PowerQuery)
+3.3 Loading (PowerBI)
+4. Data Model (Star Schema)
+<br>
 
-Year_Birth, Education, Marital_Status, Income, Kidhome, Teenhome: atributos descriptivos
+    Fact Table:
 
-Dimensión Campaña:
+The fact table contains the quantitative metrics we will analyze. In this case, the most relevant metrics for the marketing campaign dataset are:
+<br>
 
-CampaignID: clave primaria
-CampaignName: "Campaña 1", "Campaña 2", etc
-PlatformUsed: Atributos descriptivos sobre la campaña
-5. Ratios y métricas de interés
-Existen varias métricas clave que podríamos extraer de ese Dataset.
+    CustomerID: foreign key linked to the Customer dimension
 
-Tasa de Conversión por Cada Campaña:
+    CampaignID: foreign key linked to the Campaign dimension
 
-Métrica: Calcula la tasa de conversión para cada campaña (AcceptedCmp1 hasta AcceptedCmp5) dividiendo el número de clientes que aceptaron la oferta en una campaña entre el total de clientes en esa campaña. Con esto se evalua la efectividad de cada campaña. Una tasa de conversión muy alta indicará una campaña más exitosa.
+    AcceptedCmp1, AcceptedCmp2, AcceptedCmp3, AcceptedCmp4, AcceptedCmp5, Response: 1 for accepted, 0 for not accepted
 
-2.Tasa de Respuesta Global:
+    Complain: 1 for complaint, 0 for no complaint
 
+    NumDealsPurchases, NumWebPurchases, NumCatalogPurchases, NumStorePurchases, NumWebVisitsMonth: quantitative metrics.
+    <br>
+    Customer Dimension:
 
-Métrica: Calcula la tasa de respuesta global dividiendo el número total de clientes que respondieron positivamente en la última campaña (Response=1) entre el total de clientes. Esta métrica proporciona una visión general de la efectividad global de la campaña y la participación del cliente.
+<br>
 
+    CustomerID: primary key
 
-Tasa de Quejas de Clientes:
+    Year_Birth, Education, Marital_Status, Income, Kidhome, Teenhome: descriptive attributes
+    Campaign Dimension:
 
-Métrica: Calcula el porcentaje de clientes que presentaron quejas (Complain=1) en los últimos 2 años. Se indica con esto el grado de insatisfacción del cliente, lo que podría afectar las futuras estrategias de marketing y los esfuerzos de retención del cliente.
+<br>
 
+    CampaignID: primary key
+    CampaignName: "Campaign 1", "Campaign 2", etc.
+    PlatformUsed: Descriptive attributes about the campaign
 
-Análisis Demográfico de Clientes:
+5. Ratios and Metrics of Interest
 
-Métricas: Explora la distribución de clientes basada en Educación, Estado Civil e Ingresos. Su busca con ello comprender el perfil demográfico de los clientes puede ayudar a adaptar las campañas de marketing a segmentos de clientes específicos.
+There are several key metrics that we could extract from this Dataset.
+<br>
 
+    Conversion Rate for Each Campaign:
+    <br>
 
-Patrones de Compra:
+Metric: Calculates the conversion rate for each campaign (AcceptedCmp1 to AcceptedCmp5) by dividing the number of customers who accepted the offer in a campaign by the total number of customers in that campaign.
+This evaluates the effectiveness of each campaign. A very high conversion rate will indicate a more successful campaign.
+<br>
 
-Métricas: Analiza la cantidad promedio invertida en diferentes categorías de productos (MntWines, MntFruits, MntMeatProducts, etc.). Calculamos los ratios de gasto en diferentes categorías de productos para entender las preferencias del cliente. De esta forma identificaremos las categorías de productos populares y preferencias del cliente, facilitando esfuerzos de marketing dirigidos.
+2.Overall Response Rate:
+<br></br>
 
+Metric: Calculates the overall response rate by dividing the total number of customers who responded positively in the last campaign (Response=1) by the total number of customers.
+This metric provides a general view of the overall effectiveness of the campaign and customer engagement.
+<br></br>
 
-Composición del Hogar del Cliente:
+    Customer Complaint Rate:
+    <br></br>
 
-Métricas: Explora el número promedio de niños (Kidhome) y adolescentes (Teenhome) en los hogares de los clientes. Calculamos los ratios de niños y adolescentes respecto a adultos en los hogares. Se busca proporcionar un insight sobre la estructura familiar de los clientes, lo que puede influir en las estrategias de marketing, especialmente para productos orientados a la familia.
+Metric: Calculates the percentage of customers who filed complaints (Complain=1) in the last 2 years.
+This indicates the degree of customer dissatisfaction, which could affect future marketing strategies and customer retention efforts.
+<br></br>
 
+    Demographic Analysis of Customers:
+    <br></br>
 
-Canales de Compra de Clientes:
+Metrics: Explores the distribution of customers based on Education, Marital Status, and Income.
+Understanding the demographic profile of customers can help tailor marketing campaigns to specific customer segments.
+<br></br>
 
-Métricas: Analiza el número de compras realizadas a través de diferentes canales (NumWebPurchases, NumCatalogPurchases, NumStorePurchases, etc.). Calculamos la proporción de compras en línea respecto al total de compras, compras por catálogo respecto al total de compras, etc. Identificaremos así los canales de compra más populares, guiando los esfuerzos de marketing y la asignación de recursos.
+    Purchase Patterns:
+    <br></br>
 
+Metrics: Analyzes the average amount spent on different product categories (MntWines, MntFruits, MntMeatProducts, etc.).
+We calculate the spending ratios on different product categories to understand customer preferences.
+In this way, we identify popular product categories and customer preferences, facilitating targeted marketing efforts.
+<br></br>
 
-Frecuencia de Compras:
+    Household Composition of Customers:
+    <br></br>
 
-Métrica: Analiza el número promedio de días desde la última compra (Recency). Indicamos así la participación y lealtad del cliente. Un valor de recencia más bajo sugiere una participación activa del cliente.
+Metrics: Explores the average number of children (Kidhome) and teenagers (Teenhome) in customers' households.
+We calculate the ratios of children and teenagers relative to adults in households.
+It seeks to provide insight into the family structure of customers, which can influence marketing strategies, especially for family-oriented products.
+<br></br>
 
+    Customer Purchase Channels:
+    <br></br>
 
-Análisis de Respuestas de Clientes Basado en la Frecuencia de Compras:
+Metrics: Analyzes the number of purchases made through different channels (NumWebPurchases, NumCatalogPurchases, NumStorePurchases, etc.).
+We calculate the proportion of online purchases relative to total purchases, catalog purchases relative to total purchases, etc.
+We thus identify the most popular purchase channels, guiding marketing efforts and resource allocation.
+<br></br>
 
-Métrica: Calcula las tasas de respuesta basadas en diferentes periodos de recencia (por ejemplo, tasas de respuesta para clientes que realizaron una compra en los últimos 30 días, 60 días, etc.). Identificamos si la actividad reciente del cliente se correlaciona con las respuestas a las campañas, permitiendo campañas dirigidas hacia clientes activos.
+    Purchase Frequency:
+    <br></br>
 
+Metric: Analyzes the average number of days since the last purchase (Recency).
+It indicates customer participation and loyalty. A lower recency value suggests active customer engagement.
+<br></br>
 
-Métricas de Lealtad del Cliente:
+    Customer Response Analysis Based on Purchase Frequency:
+    <br></br>
 
-Métricas: Explora el número de ofertas y descuentos que los clientes han utilizado (NumDealsPurchases) y analizar las tasas de respuesta para estos clientes. Identificamos el impacto de los programas de lealtad y descuentos en las respuestas de los clientes, ayudando a optimizar las futuras campañas.
+Metric: Calculates response rates based on different periods of recency (e.g., response rates for customers who made a purchase in the last 30 days, 60 days, etc.).
+We identify if recent customer activity correlates with responses to campaigns, allowing targeted campaigns toward active customers.
+<br></br>
 
+    Customer Loyalty Metrics:
+    <br></br>
 
-Participación de los Clientes en el Sitio Web de la Empresa:
+Metrics: Explores the number of offers and discounts customers have used (NumDealsPurchases) and analyze the response rates for these customers.
+We identify the impact of loyalty programs and discounts on customer responses, helping to optimize future campaigns.
+<br></br>
 
-Métrica: Analiza el número promedio de visitas al sitio web por mes (NumWebVisitsMonth) y las tasas de respuesta para los clientes basadas en su participación en el sitio web. Nos Ayuda a entender la correlación entre la participación en línea y las respuestas a las campañas, guiando las estrategias de marketing digital.
+    Customer Engagement on the Company Website:
+    <br></br>
 
+Metric: Analyzes the average number of website visits per month (NumWebVisitsMonth) and the response rates for customers based on their participation on the website.
+It helps us understand the correlation between online engagement and responses to campaigns, guiding digital marketing strategies.
+<br></br>
 
-Análisis de Cohortes:
+    Cohort Analysis:
+    <br></br>
 
-Métrica: Agrupa a los clientes según su fecha de inscripción (DtCustomer) y analizar sus respuestas a lo largo del tiempo. Proporcionamos insights sobre la evolución del comportamiento del cliente, ayudando a comprender las tendencias de participación a largo plazo.
+Metric: Groups customers by their registration date (DtCustomer) and analyze their responses over time.
+We provide insights into the evolution of customer behavior, helping to understand long-term participation trends.
+<br></br>
 
+    Analysis of Revenue and Costs:
+    <br></br>
 
-Análisis de Ingresos y Costos:
-
-Métricas: Calcula los ingresos generados por cliente (Income) y analizar los costos de marketing para cada campaña. Calculareos el ROI (Return on Investment) para cada campaña comparando los ingresos generados con los costos de marketing. Ayuda a evaluar la rentabilidad de las campañas de marketing y a optimizar la asignación presupuestaria.
-
+Metrics: Calculates the revenue generated per customer (Income) and analyze the marketing costs for each campaign.
+We calculate the ROI (Return on Investment) for each campaign by comparing the revenue generated with the marketing costs.
+It helps to evaluate the profitability of marketing campaigns and optimize budget allocation.
