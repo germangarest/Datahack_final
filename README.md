@@ -16,6 +16,8 @@ Index
         8.1 DAX Formulas Used
         8.2 PowerQuery
 
+![Datahack](img/images.jpg) 
+
 1. Problem Description
 
 DH Marketing Consultants has hired you as a data analyst to investigate and analyze a dataset from the marketing department. The marketing director requires generating value from these data and asks you to perform an analysis. This analysis must be based on the various factors that we can measure in the dataset. At minimum, the following tasks are expected:
